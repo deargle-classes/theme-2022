@@ -1,0 +1,20 @@
+exclude:
+  - node_modules
+  - script
+
+sass:
+  style: :compressed
+
+theme: theme-2022
+
+github:
+  private: false
+  license:
+    name: MIT
+  source:
+    branch: "master"
+    path: "/"
+  repository_url: "https://github.com/deargle-classes/theme-2022"
+
+title: Jekyll Theme Primer
+description: Primer is a Jekyll theme for GitHub Pages
