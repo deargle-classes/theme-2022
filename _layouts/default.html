@@ -6,14 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 {% seo %}
+
     <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
+    {% if layout.include_nav or page.include_nav %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css">
+    {% endif %}
+
     {% include head-custom.html %}
   </head>
   <body>
-    <div class="container-lg px-3 my-5 markdown-body">
+
+    <div class="container-lg px-3 my-5 ">
+
       {% if site.title and site.title != page.title %}
       <h1><a href="{{ "/" | absolute_url }}">{{ site.title }}</a></h1>
       {% endif %}
+
+      {% if page.title %}
+      <h1 class='h1 title js-toc-ignore'>{{ page.title }}</h1>
+      {% endif %}
+
+      <div class="columns">
+
+        <div class='column three-fourths markdown-body'>
+
+
+          <div class="content js-toc-content pt-3">
+            {{ content }}
+          </div>
+
+        </div>
+
+        <div class='column one-fourth'>
+          {% if layout.include_nav or page.include_nav %}
+          <nav id="toc" data-toggle="toc" class='toc js-toc pt-3'></nav>
+          {% endif %}
+        </div>
+      </div>
+
 
       {{ content }}
 
@@ -23,7 +53,35 @@
       </div>
       {% endif %}
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
     <script>anchors.add();</script>
+
+    {% if layout.include_nav or page.include_nav %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.min.js"></script>
+
+      <script>
+      document.addEventListener('DOMContentLoaded', function(){
+
+
+
+        tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.js-toc',
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.js-toc-content',
+          // Which headings to grab inside of the contentSelector element.
+          headingSelector: 'h1, h2, h3',
+          positionFixedSelector: '.js-toc',
+          // For headings inside relative or absolute positioned containers within content.
+          hasInnerContainers: false,
+          // headingsOffset: 40,
+          // scrollSmoothOffset: -40,
+        });
+      })
+      </script>
+    {% endif %}
+
+
   </body>
 </html>
